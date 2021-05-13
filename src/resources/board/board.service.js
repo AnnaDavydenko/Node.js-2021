@@ -1,9 +1,15 @@
 const boardsRepo = require('./board.memory.repository');
+const { v4: uuid } = require('uuid');
 const Board = require('./board.model');
+
 
 const getAll = () => boardsRepo.getAll();
 const getById = (id) => boardsRepo.getById(id);
-const create = (entry) => boardsRepo.create(new Board(entry));
+const create = (entry) => {
+  const board = new Board(entry);
+  board.columns = board.columns.map(item => ({ ...item, id: uuid()}));
+  return boardsRepo.create(board);
+};
 const update = (id, entry) => boardsRepo.update(id, new Board(entry));
 const remove = (id) => boardsRepo.remove(id);
 
