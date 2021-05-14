@@ -1,5 +1,4 @@
 const router = require('express').Router();
-const createError = require('http-errors');
 const Board = require('./board.model');
 const boardService = require('./board.service');
 
@@ -11,6 +10,9 @@ router.route('/').get(async (req, res) => {
 router.route('/:boardId').get(async (req, res) => {
   const { boardId } = req.params;
   const board = await boardService.getById(boardId);
+  if (!board) {
+    return res.status(404).send('Board not found');
+  }
   return res.status(200).json(Board.toResponse(board));
 });
 
@@ -25,13 +27,16 @@ router.route('/:boardId').put(async (req, res) => {
   return res.status(200).json(Board.toResponse(board));
 });
 
-router.route('/:boardId').delete(async (req, res, next) => {
+router.route('/:boardId').delete(async (req, res) => {
   const { boardId } = req.params;
+  if (!boardId) {
+    return res.status(401).send('Access token is missing or invalid');
+  }
   const boardsData = await boardService.remove(boardId);
   if (!boardsData) {
-    return next(createError(404, 'Not Found'));
+    return res.status(404).send('Board not found');
   }
-  return res.status(204).json({ success: true });
+  return res.status(204).send('The board has been deleted');
 });
 
 module.exports = router;

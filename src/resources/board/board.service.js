@@ -1,5 +1,6 @@
-const boardsRepo = require('./board.memory.repository');
 const { v4: uuid } = require('uuid');
+const boardsRepo = require('./board.memory.repository');
+const tasksRepo = require('../task/task.memory.repository');
 const Board = require('./board.model');
 
 
@@ -10,7 +11,13 @@ const create = (entry) => {
   board.columns = board.columns.map(item => ({ ...item, id: uuid()}));
   return boardsRepo.create(board);
 };
-const update = (id, entry) => boardsRepo.update(id, new Board(entry));
-const remove = (id) => boardsRepo.remove(id);
+const update = (id, entry) => {
+  const board = new Board(entry);
+  return boardsRepo.update(id, { ...board, id });
+};
+const remove = (id) => {
+  tasksRepo.removeByBoardId(id);
+  return boardsRepo.remove(id);
+};
 
 module.exports = { getAll, getById, create, update, remove };

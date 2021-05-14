@@ -1,4 +1,4 @@
-const collection = [];
+let collection = [];
 
 const getAll = async () => {
   return collection;
@@ -31,4 +31,16 @@ const remove = async (taskId, boardId) => {
   return id;
 };
 
-module.exports = { getAll, getById, create, update, remove };
+const unassign = async (userId) => {
+  collection.forEach((item) => {
+    if (item.userId === userId) {
+      item.userId = null;
+    }
+  })
+};
+
+const removeByBoardId = async (boardId) => {
+  collection = collection.filter(item => item.boardId !== boardId);
+};
+
+module.exports = { getAll, getById, create, update, remove, unassign, removeByBoardId };

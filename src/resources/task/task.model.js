@@ -1,6 +1,4 @@
 const { v4: uuid } = require('uuid');
-const User = require('../users/user.model');
-const Board = require('../board/board.model');
 
 class Task {
   constructor({
@@ -8,8 +6,8 @@ class Task {
     title = 'New board',
     order = 123,
     description = 'New board description',
-    userId = new User().id,
-    boardId = new Board().id,
+    userId = null,
+    boardId = null,
     columnId = 123,
   } = {}) {
     this.id = id;
