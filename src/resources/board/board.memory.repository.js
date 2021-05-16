@@ -4,6 +4,16 @@ const getAll = async () => collection;
 
 const getById = async (id) => collection.find(entry => entry.id === id);
 
+/**
+ * Insert board entry to db.
+ *
+ * @function create
+ * @param {Object} entry - board model object
+ * @param {string} entry.id - board unique id
+ * @param {string} entry.title - board title
+ * @param {Array<string>} entry.columns - board title
+ * @return {Object} created entry
+ */
 const create = async (entry) => {
   collection.push(entry);
   return entry;
