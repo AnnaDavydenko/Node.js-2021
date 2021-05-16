@@ -1,12 +1,8 @@
 let collection = [];
 
-const getAll = async () => {
-  return collection;
-};
+const getAll = async () => collection;
 
-const getById = async (taskId, boardId) => {
-  return collection.find(entry => entry.id === taskId && entry.boardId === boardId);
-};
+const getById = async (taskId, boardId) => collection.find(entry => entry.id === taskId && entry.boardId === boardId);
 
 const create = async (entry) => {
   collection.push(entry);
@@ -33,8 +29,9 @@ const remove = async (taskId, boardId) => {
 
 const unassign = async (userId) => {
   collection.forEach((item) => {
-    if (item.userId === userId) {
-      item.userId = null;
+    const item1 = item;
+    if (item1.userId === userId) {
+      item1.userId = null;
     }
   })
 };

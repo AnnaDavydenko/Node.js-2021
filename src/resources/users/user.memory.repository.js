@@ -1,12 +1,8 @@
 const collection = [];
 
-const getAll = async () => {
-  return collection;
-};
+const getAll = async () => collection;
 
-const getById = async (id) => {
-  return collection.find(entry => entry.id === id);
-};
+const getById = async (id) => collection.find(entry => entry.id === id);
 
 const create = async (entry) => {
   collection.push(entry);
